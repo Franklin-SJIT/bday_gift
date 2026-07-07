@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Thara 💙</title>
-    
-    <!-- Google Fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Background Canvas for particles -->
-    <canvas id="bg-canvas"></canvas>
-    
-    <!-- Mouse Trail Canvas -->
-    <canvas id="trail-canvas"></canvas>
+    <!-- Deep Blue Aurora Background & Canvas Particles -->
+    <div id="aurora-bg"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- The "Unwrap Gift" Overlay to guarantee music plays on "entry" -->
+    <div id="entry-overlay">
+        <h1 class="playfair-text text-glow">A Special Gift For Thara</h1>
+        <p class="playfair-text">( Click anywhere to open )</p>
+    </div>
 
     <!-- Music Control -->
     <button id="music-toggle" class="glass-btn">
@@ -26,202 +28,75 @@
             <span></span><span></span><span></span>
         </div>
         <i data-lucide="music" class="music-icon"></i>
-        <span class="music-text">Play</span>
     </button>
     
-    <!-- Audio Element -->
-    <audio id="bg-music" loop>
-        <source src="pavi_bday pics/En-Jeevan.mp3" type="audio/mpeg">
-    </audio>
 
-    <!-- Loading Screen / Countdown -->
-    <div id="loading-screen" class="glass-panel-full">
-        <div class="countdown-container glass-panel">
-            <h2 class="sacramento-text" id="countdown-title">Waiting for your special day...</h2>
-            <div id="countdown" class="montserrat-text">
-                <div class="time-box"><span id="days">00</span><p>Days</p></div>
-                <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
-                <div class="time-box"><span id="mins">00</span><p>Mins</p></div>
-                <div class="time-box"><span id="secs">00</span><p>Secs</p></div>
-            </div>
-            <button id="skip-countdown" class="glass-btn small-btn">Open Anyway</button>
-        </div>
+
+    <!-- Invisible Scroll Track for Timeline Scrubbing -->
+    <div class="scroll-track"></div> 
+
+    <!-- Fixed Viewport Theatre -->
+    <div class="fixed-viewport">
         
-        <div id="bday-reveal" class="hidden">
-            <h1 class="playfair-text text-glow">Happy Birthday, Thara! 💙</h1>
-            <button id="enter-site" class="glass-btn pulse">Enter Our Story</button>
-        </div>
-    </div>
-
-    <main id="main-content" class="hidden">
-        
-        <!-- Hero Section -->
-        <section id="hero" class="fullscreen story-chapter">
-            <div class="hero-content glass-panel">
-                <h1 class="playfair-text text-glow">Happy Birthday Thara <span>💙</span></h1>
-                <p class="montserrat-text italic">Every beautiful memory began with you...</p>
-                <button id="start-story-btn" class="glass-btn hover-glow">Start Our Story <i data-lucide="arrow-down"></i></button>
-            </div>
-        </section>
-
-        <!-- Chapter 1: The Beginning (Polaroid Wall) -->
-        <section id="chapter-1" class="story-chapter">
-            <h2 class="sacramento-text text-shadow title-large">The Beginning...</h2>
-            <div id="polaroid-container" class="polaroid-wall">
-                <!-- Javascript will inject polaroids here -->
-            </div>
-        </section>
-
-        <!-- Chapter 2: Just You (Masonry Gallery) -->
-        <section id="chapter-2" class="story-chapter bg-overlay">
-            <h2 class="playfair-text text-glow title-medium">Just You</h2>
-            <p class="subtitle italic">My favorite view in the world...</p>
-            <div id="thara-masonry-container" class="masonry-gallery">
-                <!-- Javascript will inject images here -->
-            </div>
-        </section>
-
-        <!-- Chapter 2.5: Us (Romantic Gallery) -->
-        <section id="chapter-2-5" class="story-chapter">
-            <h2 class="sacramento-text text-shadow title-large text-pink-300">Us</h2>
-            <p class="subtitle italic text-pink-200">Every moment better together...</p>
-            <div id="us-masonry-container" class="masonry-gallery">
-                <!-- Javascript will inject romantic images here -->
-            </div>
-        </section>
-
-        <!-- Chapter 3: Our Crazy Moments (Memory Wheel) -->
-        <section id="chapter-3" class="story-chapter relative-overflow">
-            <h2 class="sacramento-text text-shadow title-large">Our Crazy Moments</h2>
-            <p class="subtitle">Every single moment with you is an adventure. Spin the wheel to relive one of our chaos-filled, perfect memories.</p>
-            
-            <div class="memory-wheel-container">
-                <div id="wheel-frame" class="wheel-frame glass-panel">
-                    <img id="wheel-image" src="" alt="Random memory" class="hidden">
-                    <div id="wheel-overlay" class="wheel-overlay">
-                        <i data-lucide="camera"></i>
-                        <span class="sacramento-text">Ready to remember?</span>
-                    </div>
-                </div>
-                <button id="spin-wheel-btn" class="glass-btn hover-glow"><i data-lucide="rotate-cw"></i> Spin the Wheel</button>
-            </div>
-            
-            <!-- Floating decorations -->
-            <div class="floating-decorations">
-                <i data-lucide="star" class="decor-star animate-float-slow"></i>
-                <i data-lucide="heart" class="decor-heart animate-float"></i>
-            </div>
-        </section>
-
-        <!-- Chapter 3.5: Reasons I Adore You -->
-        <section id="chapter-3-5" class="story-chapter">
-            <h2 class="sacramento-text text-shadow title-large text-pink-400">Things I Adore About You</h2>
-            <p class="subtitle italic">Just a few of the millions of reasons...</p>
-            
-            <div class="flip-cards-container">
-                <div class="flip-card glass-panel">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front flex-center">
-                            <i data-lucide="smile" class="text-pink-400 w-12 h-12"></i>
-                        </div>
-                        <div class="flip-card-back flex-center">
-                            <p class="montserrat-text text-white">Your beautiful smile that lights up any room.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flip-card glass-panel">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front flex-center">
-                            <i data-lucide="heart" class="text-pink-400 w-12 h-12"></i>
-                        </div>
-                        <div class="flip-card-back flex-center">
-                            <p class="montserrat-text text-white">How caring and compassionate your heart is.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flip-card glass-panel">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front flex-center">
-                            <i data-lucide="sun" class="text-pink-400 w-12 h-12"></i>
-                        </div>
-                        <div class="flip-card-back flex-center">
-                            <p class="montserrat-text text-white">The warmth and positivity you bring to my life.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flip-card glass-panel">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front flex-center">
-                            <i data-lucide="star" class="text-pink-400 w-12 h-12"></i>
-                        </div>
-                        <div class="flip-card-back flex-center">
-                            <p class="montserrat-text text-white">How you inspire me to be a better person.</p>
-                        </div>
-                    </div>
+        <!-- Hero Parallax Universe -->
+        <section id="scene-hero" class="scene">
+            <div id="hero-photos" class="parallax-photos"></div>
+            <div class="hero-text">
+                <h1 class="playfair-text text-glow glow-blue title-massive">Happy Birthday Thara</h1>
+                <p class="playfair-text subtitle">Every picture here remembers something our hearts never forgot.</p>
+                <div id="autoplay-btn" class="scroll-indicator pulse playfair-text">
+                    <p>Begin Journey (Autoplay)</p>
+                    <div class="mouse"><div class="wheel"></div></div>
                 </div>
             </div>
         </section>
 
-        <!-- Chapter 4: Promises -->
-        <section id="chapter-4" class="story-chapter bg-overlay">
-            <h2 class="playfair-text text-glow title-medium">Why You're My Favorite Person</h2>
-            <p class="subtitle italic">And my promises to you...</p>
-            
-            <div id="promises-grid" class="promises-container">
-                <!-- Promises injected via JS -->
-            </div>
+        <!-- Chapter 1: Beginning -->
+        <section id="scene-beginning" class="scene">
+            <h2 class="chapter-title playfair-text glow-blue">Chapter 1: The Beginning</h2>
+            <div id="beginning-container" class="photo-container"></div>
         </section>
 
-        <!-- Chapter 5: Surprises & Gifts -->
-        <section id="chapter-5" class="story-chapter">
-            <h2 class="montserrat-text title-small uppercase">Today Is Your Day</h2>
-            
-            <div id="gift-box" class="gift-box-container">
-                <div class="gift-box-3d glass-panel">
-                    <div class="gift-icon-container">
-                        <i data-lucide="gift" class="animate-pulse"></i>
-                    </div>
-                    <p class="montserrat-text">Tap to Open Surprise</p>
-                </div>
-            </div>
-
-            <div id="secret-letter" class="secret-letter glass-panel hidden">
-                <div class="letter-gradient"></div>
-                <div id="letter-content-wrapper" class="hidden">
-                    <h3 class="playfair-text">Happy Birthday, Thara 💙</h3>
-                    <div class="letter-content inter-text">
-                        <p id="typewriter-text"></p>
-                    </div>
-                </div>
-            </div>
+        <!-- Chapter 2: Only She -->
+        <section id="scene-she" class="scene">
+            <h2 class="chapter-title playfair-text glow-cyan">Chapter 2: Only Thara</h2>
+            <div id="she-container" class="photo-container"></div>
         </section>
 
-        <!-- Final Scene -->
-        <section id="final-scene" class="story-chapter final-scene-bg">
-            <!-- I Love You Particle Canvas -->
-            <canvas id="heart-canvas"></canvas>
-            
-            <div class="final-text-container">
-                <h2 class="sacramento-text final-text text-glow">To Be Continued...</h2>
-                <p class="montserrat-text final-text">Our story is only getting started.</p>
+        <!-- Chapter 3: Us -->
+        <section id="scene-us" class="scene">
+            <h2 class="chapter-title playfair-text glow-cyan">Chapter 3: Us</h2>
+            <div id="promises-container" class="promise-cards">
+                <div class="promise-card glass-panel">I'll always choose you.</div>
+                <div class="promise-card glass-panel">You are my safest place.</div>
+                <div class="promise-card glass-panel">My favorite notification.</div>
+                <div class="promise-card glass-panel">You became my home.</div>
+                <div class="promise-card glass-panel">I'll keep making memories with you.</div>
+            </div>
+            <div id="us-container" class="photo-container"></div>
+        </section>
+
+        <!-- Chapter 4: Chaotic -->
+        <section id="scene-chaotic" class="scene">
+            <h2 class="chapter-title playfair-text glow-blue">Chapter 4: Chaotic</h2>
+            <div id="chaotic-container" class="photo-container"></div>
+        </section>
+
+        <!-- The Final Surprise -->
+        <section id="scene-finale" class="scene">
+            <div id="heart-formation-container"></div>
+            <div class="finale-text">
+                <h1 class="playfair-text text-glow glow-cyan title-massive">Happy Birthday Thara ❤️</h1>
+                <p class="inter-text subtitle">I loved every chapter.<br>My favorite one is still the one we're writing.</p>
             </div>
         </section>
         
-    </main>
-
-    <!-- Photo Lightbox -->
-    <div id="lightbox" class="lightbox-overlay hidden">
-        <button id="close-lightbox" class="lightbox-close">
-            <i data-lucide="x"></i>
-        </button>
-        <img id="lightbox-img" src="" alt="Enlarged memory">
-        <p id="lightbox-caption" class="sacramento-text text-shadow"></p>
     </div>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="script.js"></script>
 </body>
